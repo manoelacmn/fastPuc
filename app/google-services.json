@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "736217355674",
+    "project_id": "fastpuc",
+    "storage_bucket": "fastpuc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736217355674:android:be7f53381c12610d9ed623",
+        "android_client_info": {
+          "package_name": "com.documentation.fastpuc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736217355674-0f8rvhcb020lt2g48e5e6adghbsa7365.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBm1yLQMD9p6BWyZT_A4gGI0KFF0yQSV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736217355674-0f8rvhcb020lt2g48e5e6adghbsa7365.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
