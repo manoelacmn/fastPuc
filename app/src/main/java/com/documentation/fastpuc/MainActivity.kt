@@ -4,13 +4,13 @@ import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import com.documentation.fastpuc.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var binding:  ActivityMainBinding
     val db = Firebase.firestore
@@ -32,5 +32,10 @@ class MainActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
             }
+
+        val points = listOf("H0", "H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10", "H11", "H12", "H13", "H14", "H15")
+        val adapter = ArrayAdapter(this, R.layout.list_item, points)
+        binding.ACTStartPoint.setAdapter(adapter)
+        binding.ACTEndPoint.setAdapter(adapter)
     }
 }
