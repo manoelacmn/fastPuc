@@ -39,31 +39,58 @@ class MainActivity : AppCompatActivity() {
         println(graph.toString())
 
         val points = mutableListOf<String>()
-
+        val index  = hashMapOf<String, String>()
 
         db.collection("v1")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-//                    Log.d(TAG, "${document.id} => ${document.data} & NAME: ${document.data["name"]}")
-//                    points.add(document.data["name"] as String)
+
+
+
+                    index[document.data["name"] as String] = document.id
+                    val first = graph.createVertex(document.id)
 
                         for ((key, value) in document.data) {
-                            Log.d("NEW DOCUMENT","DOCUMENT")
-                            println("$key: $value")
-                            if (!points.contains(key)){
-                                points.add(key)
+                          //  Log.d("NEW DOCUMENT","DOCUMENT")
+
+                            if(key!="name"){
+                                Log.d("DOCUMENT DATA KEYS",key)
+                                val others= graph.createVertex(key)
+                                graph.add(EdgeType.UNDIRECTED,first, others, value.toString().toDouble())
                             }
+
                         }
+                    if (!points.contains(document.data["name"])){
+                        points.add(document.data["name"] as String)
+                        // points.add(key)
+                    }
+//                    print(index.toString())
+                    Log.d("INDEX HASHMAP",index.toString())
+                    for ((key, value) in index) {
+                        //  Log.d("NEW DOCUMENT","DOCUMENT")
+                        println("MAP DATA:  $key: $value")
+
+                    }
                 }
+                println(graph.toString())
+                Log.d("GRAPH VALUES",graph.toString())
+
+
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
             }
 
-        Log.d("FINAL LIST",points.toString())
+//        Log.d("FINAL LIST",points.toString())
 
-        println(graph.toString())
+//        println(graph.toString())
+
+//
+//        println("HERE")
+
+        println("HERE")
+        print(index.toString())
 
 
         val adapter = ArrayAdapter(this, R.layout.list_item, points)
