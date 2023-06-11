@@ -119,25 +119,61 @@ class MainActivity : AppCompatActivity() {
 
                     }
                 }
-                println(graph.toString())
-                Log.d("GRAPH VALUES",graph.toString())
-
+//                println(graph.toString())
+//                Log.d("GRAPH VALUES",graph.toString())
+//
+//                val vertexA = graph.vertices.find { it.data ==  "a"}!!
+//
+//                val vertexD = graph.vertices.find { it.data ==  "f"}!!
+//                Log.d("FINAL VERTEX:",vertexD.toString())
+//                val shortestPath = graph.shortestPath(vertexA, vertexD)
+//
+//                if (shortestPath.isNotEmpty()) {
+//                    println("Shortest path from A to D: ${shortestPath.joinToString(" -> ") { it.data }}")
+//                } else {
+//                    println("No path exists")
+//                }
 
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
             }
 
-//        Log.d("FINAL LIST",points.toString())
+        Log.d("FINAL LIST",points.toString())
 
 //        println(graph.toString())
 
 //
 //        println("HERE")
 
+//        val vertexA = graph.vertices.find { it.data ==  "a"}!!
+//
+//        val vertexD = graph.vertices.find { it.data ==  "f"}!!
+//        val shortestPath = graph.shortestPath(vertexA, vertexD)
+//
+//        if (shortestPath.isNotEmpty()) {
+//            println("Shortest path from A to D: ${shortestPath.joinToString(" -> ") { it.data }}")
+//        } else {
+//            println("No path exists")
+//        }
+
+
         println("HERE")
         print(index.toString())
 
+//        val vertexA = graph.createVertex("uwu")
+//        val vertexB = graph.createVertex("uwu1")
+//        val vertexC = graph.createVertex("uwu2")
+//        val vertexD = graph.createVertex("uwu3")
+//
+//        graph.addDirectedEdge(vertexA, vertexB, 5.0)
+//        graph.addDirectedEdge(vertexA, vertexC, 3.0)
+//        graph.addDirectedEdge(vertexB, vertexD, 2.0)
+//        graph.addDirectedEdge(vertexC, vertexD, 1.0)
+//
+//        val shortestPath = graph.shortestPath(vertexA, vertexD)
+
+//        Log.d("SHORTEST PATH",shortestPath.toString())
 
         val adapter = ArrayAdapter(this, R.layout.list_item, points)
         binding.ACTStartPoint.setAdapter(adapter)
@@ -145,7 +181,37 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnProcurar.setOnClickListener {
             Toast.makeText(this, binding.ACTStartPoint.text, Toast.LENGTH_SHORT).show()
+            Log.d("STARTING POINT", binding.ACTStartPoint.text.toString())
+            Log.d("ENDING POINT POINT", binding.ACTEndPoint.text.toString())
+
+//            val startVertex = graph.vertices.find { it.data ==  binding.ACTStartPoint.text.toString()}
+            //val endvVertex = graph.vertices.find { it.data ==  binding.ACTEndPoint.text.toString()}
+
+           // val endvVertex = graph.vertices.find { index[binding.ACTEndPoint.text.toString()].toString()}
+
+
+
+            val tempKey = index[binding.ACTStartPoint.text.toString()]
+
+            val tempKey1 = index[binding.ACTEndPoint.text.toString()]
+
+            val endVertex = graph.vertices.find { it.data ==  tempKey1.toString()}
+
+
+
+            Log.d("TEMPKEY",tempKey.toString())
+
+            val startVertex = graph.vertices.find { it.data ==  tempKey.toString()}
+
+            Log.d("VERTICES LIST:",graph.vertices.toString())
+
+
+            Log.d("START VERTEX POINT:",startVertex.toString())
+
+            Log.d("ENDING VERTEX POINT:",endVertex.toString())
+
             println(graph.toString())
+
 
         }
 

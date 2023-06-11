@@ -75,4 +75,46 @@ class AdjacencyMatrix<T>: Graph<T> {
 // 3
                 return "$verticesDescription\n\n$edgesDescription"
             }
+    fun dijkstra(startVertex: vertex<T>): Map<vertex<T>, Double> {
+        val distances = vertices.associateWith { Double.MAX_VALUE }.toMutableMap()
+        distances[startVertex] = 0.0
+
+        val unvisitedVertices = vertices.toMutableList()
+
+        while (unvisitedVertices.isNotEmpty()) {
+            val currentVertex = unvisitedVertices.minByOrNull { distances[it]!! }!!
+            unvisitedVertices.remove(currentVertex)
+
+            val currentDistance = distances[currentVertex]!!
+
+            edges(currentVertex).forEach { edge ->
+                val neighbor = edge.destination
+                val weight = edge.weight
+
+                val newDistance = currentDistance + (weight ?: 0.0)
+                if (newDistance < distances[neighbor]!!) {
+                    distances[neighbor] = newDistance
+                }
+            }
+        }
+
+        return distances
+    }
+    fun shortestPath(startVertex: vertex<T>, endVertex: vertex<T>): List<vertex<T>> {
+        val distances = dijkstra(startVertex)
+        val shortestPath = mutableListOf<vertex<T>>()
+
+        var currentVertex = endVertex
+        while (currentVertex != startVertex) {
+            shortestPath.add(0, currentVertex)
+            val edgesToCurrent = edges(currentVertex)
+            val previousVertex = edgesToCurrent.minByOrNull { distances[it.source]!! + (it.weight ?: 0.0) }?.source
+                ?: // No path exists
+                return emptyList()
+            currentVertex = previousVertex
+        }
+
+        shortestPath.add(0, startVertex)
+        return shortestPath
+    }
 }
