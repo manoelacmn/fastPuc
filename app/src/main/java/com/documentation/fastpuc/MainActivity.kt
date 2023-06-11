@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-
+                Log.d("WHOLE DOCUMENT",document.data.toString())
                    Log.d("VERTICES LIST:",graph.vertices.toString())
 
                     index[document.data["name"] as String] = document.id
@@ -56,14 +56,51 @@ class MainActivity : AppCompatActivity() {
                     if(alreadyExists==null){
                         val first = graph.createVertex(document.id)
                         for ((key, value) in document.data) { // acess the others values within a document
-                            //  Log.d("NEW DOCUMENT","DOCUMENT")
+                              Log.d("NEW DOCUMENT",value.toString())
 
                             if(key!="name"){
                                 Log.d("DOCUMENT DATA KEYS",key)
+                                Log.d("VERTICES LIST2:",graph.vertices.toString())
 
-                                val others= graph.createVertex(key)
+                                val alreadyExists1 = graph.vertices.find { it.data ==  key}
+                                Log.d("ALREADY EXIST1:","${alreadyExists1.toString()} VALUE: ${value.toString()}")
+
+                                if (alreadyExists1 == null){ // if not exists then create a vertice and its edge
+                                    println(graph.toString())
+                                    val others= graph.createVertex(key)
+                                    graph.add(EdgeType.UNDIRECTED,first, others, value.toString().toDouble())
+                                }else{  // if exists only create edge
+                                    graph.add(EdgeType.UNDIRECTED,first, alreadyExists1, value.toString().toDouble())
+                                }
+
+                               // val others= graph.createVertex(key)
                                 // acess the others values within a document
-                                graph.add(EdgeType.UNDIRECTED,first, others, value.toString().toDouble()) // create edges with the others
+                                 // create edges with the others
+                            }
+
+                        }
+                    }else{
+                        for ((key, value) in document.data) { // acess the others values within a document
+                            Log.d("NEW DOCUMENT",value.toString())
+
+                            if(key!="name"){
+                                Log.d("DOCUMENT DATA KEYS",key)
+                                Log.d("VERTICES LIST2:",graph.vertices.toString())
+
+                                val alreadyExists1 = graph.vertices.find { it.data ==  key}
+                                Log.d("ALREADY EXIST1:","${alreadyExists1.toString()} VALUE: ${value.toString()}")
+
+                                if (alreadyExists1 == null){ // if not exists then create a vertice and its edge
+                                    println(graph.toString())
+                                    val others= graph.createVertex(key)
+                                    graph.add(EdgeType.UNDIRECTED,alreadyExists, others, value.toString().toDouble())
+                                }else{  // if exists only create edge
+                                    graph.add(EdgeType.UNDIRECTED,alreadyExists, alreadyExists1, value.toString().toDouble())
+                                }
+
+                                // val others= graph.createVertex(key)
+                                // acess the others values within a document
+                                // create edges with the others
                             }
 
                         }
