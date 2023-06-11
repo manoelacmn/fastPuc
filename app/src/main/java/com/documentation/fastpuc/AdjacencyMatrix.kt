@@ -1,8 +1,8 @@
 package com.documentation.fastpuc
 
 class AdjacencyMatrix<T>: Graph<T> {
-    private val vertices = arrayListOf<vertex<T>>()
-    private val weights = arrayListOf<ArrayList<Double?>>()
+     val vertices = arrayListOf<vertex<T>>()
+     val weights = arrayListOf<ArrayList<Double?>>()
 
 
 

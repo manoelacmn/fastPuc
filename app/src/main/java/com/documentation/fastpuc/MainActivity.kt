@@ -46,23 +46,32 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result) {
 
-
+                   Log.d("VERTICES LIST:",graph.vertices.toString())
 
                     index[document.data["name"] as String] = document.id
-                    val first = graph.createVertex(document.id)
 
-                        for ((key, value) in document.data) {
-                          //  Log.d("NEW DOCUMENT","DOCUMENT")
+                    val alreadyExists = graph.vertices.find { it.data ==  document.id}
+                    Log.d("ELEMENT FOUND", alreadyExists.toString())
+
+                    if(alreadyExists==null){
+                        val first = graph.createVertex(document.id)
+                        for ((key, value) in document.data) { // acess the others values within a document
+                            //  Log.d("NEW DOCUMENT","DOCUMENT")
 
                             if(key!="name"){
                                 Log.d("DOCUMENT DATA KEYS",key)
+
                                 val others= graph.createVertex(key)
-                                graph.add(EdgeType.UNDIRECTED,first, others, value.toString().toDouble())
+                                // acess the others values within a document
+                                graph.add(EdgeType.UNDIRECTED,first, others, value.toString().toDouble()) // create edges with the others
                             }
 
                         }
+                    }
+
+
                     if (!points.contains(document.data["name"])){
-                        points.add(document.data["name"] as String)
+                        points.add(document.data["name"] as String) // verify if vertice name is already contained if not it adds
                         // points.add(key)
                     }
 //                    print(index.toString())
