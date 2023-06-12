@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.documentation.fastpuc.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 
 
 class MainActivity : AppCompatActivity() {
@@ -201,7 +202,43 @@ class MainActivity : AppCompatActivity() {
 
             Log.d("TEMPKEY",tempKey.toString())
 
-            val startVertex = graph.vertices.find { it.data ==  tempKey.toString()}
+            val startVertex = graph.vertices.find { it.data ==  tempKey.toString()}!!
+
+
+            val edgesOfA = graph.edges(startVertex)
+
+            Log.d("Edge list", edgesOfA.toString())
+
+
+            for (edge in edgesOfA) {
+                Log.d("Edge", "From: ${edge.source.data} To: ${edge.destination} Weight: ${edge.weight}")
+
+            }
+//            graph.dijkstraShortestPath(endVertex!!)
+            Log.d("SHORTEST PATH",graph.dijkstraShortestPath(endVertex!!).toString())
+
+            val  smallestPaths = graph.dijkstraShortestPath(endVertex)
+
+            for((vertex,weight) in smallestPaths){
+                if (vertex.data == tempKey) {
+                    val format  = DecimalFormat("#.##")
+                    val result = (weight.toDouble()/1.4)
+                    val text = format.format(result)
+                    println("Vertex: $vertex, Weight: $weight")
+                    Log.d("Total time:", (text.toString()));
+                    binding.tvResult.text = text
+                }
+            }
+
+//            if (shortestDistances != null) {
+//                for (vertex in shortestDistances.keys) {
+//                    val distance = shortestDistances.get(vertex)
+//                    println("Shortest distance from A to ${vertex.data}: $distance")
+//                    if (distance != null) {
+//                        Log.d("SHORTEST PATH",(distance/1.6).toString())
+//                    }
+//                }
+//            }
 
             Log.d("VERTICES LIST:",graph.vertices.toString())
 

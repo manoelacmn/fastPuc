@@ -1,5 +1,8 @@
 package com.documentation.fastpuc
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 class AdjacencyMatrix<T>: Graph<T> {
      val vertices = arrayListOf<vertex<T>>()
      val weights = arrayListOf<ArrayList<Double?>>()
@@ -75,46 +78,64 @@ class AdjacencyMatrix<T>: Graph<T> {
 // 3
                 return "$verticesDescription\n\n$edgesDescription"
             }
-    fun dijkstra(startVertex: vertex<T>): Map<vertex<T>, Double> {
-        val distances = vertices.associateWith { Double.MAX_VALUE }.toMutableMap()
-        distances[startVertex] = 0.0
 
-        val unvisitedVertices = vertices.toMutableList()
 
-        while (unvisitedVertices.isNotEmpty()) {
-            val currentVertex = unvisitedVertices.minByOrNull { distances[it]!! }!!
-            unvisitedVertices.remove(currentVertex)
 
-            val currentDistance = distances[currentVertex]!!
 
-            edges(currentVertex).forEach { edge ->
+//    fun diji(start: vertex<T>,destination: vertex<T>) {
+//        val distance =  mutableMapOf<vertex<T>, Double>()
+//        var dvo = 0
+//        val visited = mutableSetOf<vertex<T>>()
+//        val U = mutableListOf<vertex<T>>()
+//
+//        for (edge in edges(start)) {
+//            val edgeDestination = edge.destination
+//            U.add(edgeDestination)
+//            val destinationData = edgeDestination.data
+//            println("Destination Vertex: $destinationData")
+//        }
+//
+//        vertices.forEach{vertex ->
+//            distance[vertex] = if (vertex == start) 0.0 else Double.MAX_VALUE
+//            U.add(vertex)
+//        }
+//        while (U.isNotEmpty()){
+//
+//        }
+//    }
+
+
+    fun dijkstraShortestPath(start: vertex<T>): Map<vertex<T>, Double> {
+        val distances = mutableMapOf<vertex<T>, Double>()
+        val visited = mutableSetOf<vertex<T>>()
+        val pq = PriorityQueue<vertex<T>> { v1, v2 -> (distances[v1] ?: Double.MAX_VALUE).compareTo(distances[v2] ?: Double.MAX_VALUE) }
+
+        vertices.forEach { vertex ->
+            distances[vertex] = if (vertex == start) 0.0 else Double.MAX_VALUE
+            pq.add(vertex)
+        }
+
+        while (pq.isNotEmpty()) {
+            val current = pq.poll()
+            visited.add(current!!)
+
+            val currentDistance = distances[current as vertex<T>] ?: continue
+            val currentEdges = edges(current)
+
+            for (edge in currentEdges) {
                 val neighbor = edge.destination
-                val weight = edge.weight
+                if (visited.contains(neighbor)) continue
 
-                val newDistance = currentDistance + (weight ?: 0.0)
-                if (newDistance < distances[neighbor]!!) {
+                val newDistance = currentDistance + edge.weight!!
+                if (newDistance < (distances[neighbor] ?: Double.MAX_VALUE)) {
                     distances[neighbor] = newDistance
+                    pq.remove(neighbor)
+                    pq.add(neighbor)
                 }
             }
         }
 
         return distances
     }
-    fun shortestPath(startVertex: vertex<T>, endVertex: vertex<T>): List<vertex<T>> {
-        val distances = dijkstra(startVertex)
-        val shortestPath = mutableListOf<vertex<T>>()
 
-        var currentVertex = endVertex
-        while (currentVertex != startVertex) {
-            shortestPath.add(0, currentVertex)
-            val edgesToCurrent = edges(currentVertex)
-            val previousVertex = edgesToCurrent.minByOrNull { distances[it.source]!! + (it.weight ?: 0.0) }?.source
-                ?: // No path exists
-                return emptyList()
-            currentVertex = previousVertex
-        }
-
-        shortestPath.add(0, startVertex)
-        return shortestPath
-    }
 }
