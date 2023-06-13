@@ -176,9 +176,10 @@ class MainActivity : AppCompatActivity() {
 
 //        Log.d("SHORTEST PATH",shortestPath.toString())
 
-        val adapter = ArrayAdapter(this, R.layout.list_item, points)
-        binding.ACTStartPoint.setAdapter(adapter)
-        binding.ACTEndPoint.setAdapter(adapter)
+        val adapter1 = ArrayAdapter(this, R.layout.list_item, points)
+        val adapter2 = ArrayAdapter(this, R.layout.list_item, points)
+        binding.ACTStartPoint.setAdapter(adapter1)
+        binding.ACTEndPoint.setAdapter(adapter2)
 
         binding.btnProcurar.setOnClickListener {
             Toast.makeText(this, binding.ACTStartPoint.text, Toast.LENGTH_SHORT).show()

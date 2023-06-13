@@ -46,10 +46,23 @@
         android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tempo em segundos:"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"
+        android:layout_marginTop="280dp"
+        />
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/tv_result"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="310dp"
+        android:textSize="25dp"
+
+        />
 
 
 </RelativeLayout>
